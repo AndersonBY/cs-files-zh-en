@@ -1,0 +1,19 @@
+[project]
+name = "cs-files-zh-en"
+version = "0.1.0"
+description = "Fetches items_game.txt and csgo_english.txt from Steam CDN"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "aiohttp>=3.12.14",
+    "requests>=2.32.4",
+    "steam[client]>=1.4.4",
+    "vpk>=1.4.0",
+]
+
+[project.scripts]
+cs-files-zh-en = "cs_files_zh_en.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
