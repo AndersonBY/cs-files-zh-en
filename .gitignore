@@ -141,3 +141,4 @@ pdm.lock
 temp/
 .python-version
 .claude/
+CLAUDE.md
