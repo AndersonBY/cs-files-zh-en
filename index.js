@@ -1,7 +1,6 @@
 const SteamUser = require('steam-user');
 const fs = require('fs');
 const vpk = require('vpk');
-const iconv = require('iconv-lite');
 const appId = 730;
 const depotId = 2347770;
 const dir = `./static`;
@@ -10,6 +9,7 @@ const manifestIdFile = 'manifestId.txt'
 
 const vpkFiles = [
     'resource/csgo_english.txt',
+    'resource/csgo_schinese.txt',
     'scripts/items/items_game.txt',
 ];
 
@@ -22,7 +22,7 @@ async function downloadVPKDir(user, manifest) {
 
     // Persist in static directory
     fs.copyFileSync(`${temp}/pak01_dir.vpk`, `${dir}/pak01_dir.vpk`);
-    
+
     vpkDir = new vpk(`${temp}/pak01_dir.vpk`);
     vpkDir.load();
 
@@ -61,13 +61,13 @@ async function downloadVPKArchives(user, manifest, vpkDir) {
 
         // pad to 3 zeroes
         const archiveIndex = requiredIndices[index];
-        const paddedIndex = '0'.repeat(3-archiveIndex.toString().length) + archiveIndex;
+        const paddedIndex = '0'.repeat(3 - archiveIndex.toString().length) + archiveIndex;
         const fileName = `pak01_${paddedIndex}.vpk`;
 
         const file = manifest.manifest.files.find((f) => f.filename.endsWith(fileName));
         const filePath = `${temp}/${fileName}`;
 
-        const status = `[${index+1}/${requiredIndices.length}]`;
+        const status = `[${index + 1}/${requiredIndices.length}]`;
 
         console.log(`${status} Downloading ${fileName}`);
 
@@ -95,7 +95,7 @@ function extractVPKFiles(vpkDir) {
             if (path.startsWith(f)) {
                 let file = vpkDir.getFile(path);
                 const filepath = f.split('/');
-                const fileName = filepath[filepath.length-1];
+                const fileName = filepath[filepath.length - 1];
 
                 // Remove BOM from file (https://en.wikipedia.org/wiki/Byte_order_mark)
                 // Convenience so down stream users don't have to worry about decoding with BOM
@@ -123,11 +123,11 @@ if (process.argv.length != 4) {
     process.exit(1);
 }
 
-if (!fs.existsSync(dir)){
+if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
 
-if (!fs.existsSync(temp)){
+if (!fs.existsSync(temp)) {
     fs.mkdirSync(temp);
 }
 
